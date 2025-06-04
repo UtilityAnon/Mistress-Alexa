@@ -2,23 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mistress Alexa</title>
-  <link rel="stylesheet" href="style.css">
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json" />
+  <!-- Apple touch icon -->
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <!-- Theme color for status bar -->
+  <meta name="theme-color" content="#8A2BE2" />
+  <!-- iOS standalone mode -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- Your CSS -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Mistress Alexa</h1>
-  </header>
-  <main>
-    <div id="chat-box"></div>
-    <div id="input-area">
-      <label for="media-upload" class="media-button">📷</label>
-      <input type="file" id="media-upload" accept="image/*,video/*" style="display:none">
-      <input type="text" id="user-input" placeholder="Speak to your Mistress..." />
-      <button id="send-button">➤</button>
-    </div>
-  </main>
-  <script src="script.js"></script>
+  <div id="app">
+    <header class="app-header">
+      <h1>Mistress Alexa</h1>
+    </header>
+
+    <main class="chat-window" id="chatWindow">
+      <!-- Chat messages will appear here -->
+    </main>
+
+    <footer class="chat-input-area">
+      <button id="mediaButton" aria-label="Send Media">📎</button>
+      <input type="text" id="chatInput" placeholder="Type your message..." autocomplete="off" />
+      <button id="sendButton" aria-label="Send Message">➤</button>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
 </body>
 </html>
