@@ -1,42 +1,55 @@
-// Paste this entire code into app/page.tsx
+"use client"
 
-import React, { useState } from 'react';
+import { useState } from "react"
+import { UploadButton } from "../../components/UploadButton"
 
-export default function Chat() {
-  const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([]);
+export default function ChatPage() {
+  const [message, setMessage] = useState("")
+  const [showUpload, setShowUpload] = useState(false)
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
-    setMessages([...messages, { text: input, sender: 'You' }]);
-    setInput('');
-  };
+  const handleSend = () => {
+    if (!message.trim()) return
+    console.log("User message:", message)
+    setMessage("")
+  }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
-      <header style={{ padding: '1rem', backgroundColor: '#222', color: 'white', fontSize: '1.5rem' }}>
-        Mistress Alexa
-      </header>
-
-      <div style={{ flex: 1, padding: '1rem', overflowY: 'auto', backgroundColor: '#f5f5f5' }}>
-        {messages.map((msg, idx) => (
-          <div key={idx} style={{ marginBottom: '0.5rem' }}>
-            <strong>{msg.sender}:</strong> {msg.text}
-          </div>
-        ))}
+    <div className="flex flex-col h-screen bg-black text-white">
+      <div className="flex justify-center items-center p-4 border-b border-gray-700">
+        <h1 className="text-lg font-bold">Mistress Alexa</h1>
       </div>
 
-      <footer style={{ display: 'flex', padding: '0.5rem', borderTop: '1px solid #ccc' }}>
-        <button style={{ marginRight: '0.5rem' }}>📎</button>
+      <div className="flex-grow p-4 overflow-y-auto">
+        <p className="text-gray-500 text-center">Her messages will appear here…</p>
+      </div>
+
+      {showUpload && (
+        <div className="p-2 border-t border-gray-700 bg-gray-900">
+          <UploadButton />
+        </div>
+      )}
+
+      <div className="flex items-center p-4 border-t border-gray-700 bg-gray-800">
+        <button
+          onClick={() => setShowUpload(!showUpload)}
+          className="text-white mr-2 bg-gray-700 p-2 rounded hover:bg-gray-600"
+        >
+          📎
+        </button>
         <input
           type="text"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          style={{ flex: 1, marginRight: '0.5rem' }}
-          placeholder="Type your command, slave..."
+          className="flex-grow bg-black text-white p-2 rounded border border-gray-700"
+          placeholder="Type your confession…"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
         />
-        <button onClick={sendMessage}>Send</button>
-      </footer>
+        <button
+          onClick={handleSend}
+          className="ml-2 bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded"
+        >
+          Send
+        </button>
+      </div>
     </div>
-  );
+  )
 }
