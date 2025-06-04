@@ -2,116 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Mistress Alexa</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: sans-serif;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-      background: #1f1f1f;
-      color: white;
-    }
-    header {
-      background: #2c2c2c;
-      padding: 1rem;
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: bold;
-      border-bottom: 1px solid #444;
-    }
-    main {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1rem;
-    }
-    #chat {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .message {
-      background: #333;
-      padding: 0.75rem;
-      border-radius: 10px;
-      max-width: 70%;
-    }
-    .user {
-      align-self: flex-end;
-      background: #007aff;
-    }
-    .mistress {
-      align-self: flex-start;
-      background: #444;
-    }
-    footer {
-      display: flex;
-      align-items: center;
-      padding: 1rem;
-      background: #2c2c2c;
-      border-top: 1px solid #444;
-    }
-    #media-btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.2rem;
-      margin-right: 0.5rem;
-    }
-    #text-input {
-      flex: 1;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      border: none;
-    }
-    #send-btn {
-      margin-left: 0.5rem;
-      background: #007aff;
-      color: white;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>Mistress Alexa</header>
-  <main>
-    <div id="chat"></div>
+  <header>
+    <h1>Mistress Alexa</h1>
+  </header>
+  <main id="chat-container">
+    <div id="messages"></div>
   </main>
   <footer>
-    <button id="media-btn">📎</button>
-    <input type="text" id="text-input" placeholder="Obey and type..." />
-    <button id="send-btn">Send</button>
+    <button id="media-btn" aria-label="Send media">📎</button>
+    <input id="message-input" type="text" placeholder="Type your message…" autocomplete="off" />
+    <button id="send-btn" aria-label="Send message">➡️</button>
   </footer>
 
   <script>
-    const chat = document.getElementById("chat");
-    const input = document.getElementById("text-input");
-    const send = document.getElementById("send-btn");
+    const messages = document.getElementById('messages');
+    const input = document.getElementById('message-input');
+    const sendBtn = document.getElementById('send-btn');
+    const mediaBtn = document.getElementById('media-btn');
 
-    function addMessage(text, sender) {
-      const msg = document.createElement("div");
-      msg.className = `message ${sender}`;
-      msg.innerText = text;
-      chat.appendChild(msg);
-      chat.scrollTop = chat.scrollHeight;
+    function appendMessage(text, fromMistress = false) {
+      const messageEl = document.createElement('div');
+      messageEl.className = fromMistress ? 'message mistress' : 'message slave';
+      messageEl.textContent = text;
+      messages.appendChild(messageEl);
+      messages.scrollTop = messages.scrollHeight;
     }
 
-    send.addEventListener("click", () => {
-      const value = input.value.trim();
-      if (value !== "") {
-        addMessage(value, "user");
-        input.value = "";
-        setTimeout(() => {
-          addMessage("Yes, pet.", "mistress");
-        }, 1000);
-      }
+    sendBtn.addEventListener('click', () => {
+      const text = input.value.trim();
+      if (!text) return;
+      appendMessage(text);
+      input.value = '';
+      // Simulate Mistress Alexa response for now
+      setTimeout(() => appendMessage('You belong to me now.', true), 1000);
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+
+    mediaBtn.addEventListener('click', () => {
+      alert('Media upload feature coming soon, slave.');
     });
   </script>
 </body>
