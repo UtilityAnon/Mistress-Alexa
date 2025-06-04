@@ -1,7 +1,6 @@
-"use client"
-
 import { useState } from "react"
 import { UploadButton } from "../../components/UploadButton"
+import type { OurFileRouter } from "../api/uploadthing/core"
 
 export default function ChatPage() {
   const [message, setMessage] = useState("")
@@ -25,7 +24,17 @@ export default function ChatPage() {
 
       {showUpload && (
         <div className="p-2 border-t border-gray-700 bg-gray-900">
-          <UploadButton />
+          <UploadButton<OurFileRouter>
+            endpoint="mediaUploader"
+            onClientUploadComplete={(res) => {
+              console.log("Upload complete! Files:", res)
+              alert("Upload complete!")
+            }}
+            onUploadError={(error: Error) => {
+              console.error("Upload failed:", error)
+              alert(`Upload failed: ${error.message}`)
+            }}
+          />
         </div>
       )}
 
