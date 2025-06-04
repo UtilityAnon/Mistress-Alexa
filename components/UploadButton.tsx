@@ -1,7 +1,5 @@
-"use client"
-
-import { UploadButton } from "@uploadthing/react"
-import type { OurFileRouter } from "../api/uploadthing/core"
+import { UploadButton } from "@uploadthing/react";
+import type { OurFileRouter } from "../api/uploadthing/core";
 
 export default function UploadMediaButton() {
   return (
@@ -9,14 +7,14 @@ export default function UploadMediaButton() {
       <UploadButton<OurFileRouter>
         endpoint="mediaUploader"
         onClientUploadComplete={(res) => {
-          console.log("Upload complete! Files:", res)
-          alert("Upload complete!")
+          console.log("Upload complete! Files:", res);
+          alert("Upload complete!");
         }}
         onUploadError={(error: Error) => {
-          console.error("Upload failed:", error)
-          alert(`Upload failed: ${error.message}`)
+          console.error("Upload failed:", error);
+          alert(`Upload failed: ${error.message}`);
         }}
       />
     </div>
-  )
+  );
 }
