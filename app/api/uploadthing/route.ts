@@ -1,13 +1,8 @@
-import { createUploadthing, type FileRouter } from "uploadthing/next";
+// app/api/uploadthing/route.ts
 
-const f = createUploadthing();
+import { createNextRouteHandler } from "uploadthing/next";
+import { ourFileRouter } from "./core";
 
-const uploadRouter = {
-  imageUploader: f({ image: { maxFileSize: "4MB" } }).onUploadComplete(async ({ file }) => {
-    console.log("Upload complete:", file);
-  }),
-} satisfies FileRouter;
-
-export type UploadRouter = typeof uploadRouter;
-export const { middleware, config } = f;
-export default uploadRouter;
+export const { GET, POST } = createNextRouteHandler({
+  router: ourFileRouter,
+});
